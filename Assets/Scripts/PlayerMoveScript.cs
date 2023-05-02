@@ -4,10 +4,14 @@ using UnityEngine;
 public class PlayerMoveScript : MonoBehaviour
 {
     private Rigidbody2D body;
-    private float speed = 7f;
-    public int playerNumber = 0;
+    public float speed = 7f;
     public List<KeyCode> buttons = new List<KeyCode>();
-    private bool _isOnGround = true;
+
+    private bool _isOnGround = false;
+    public float GroundRadius = 0.2f;
+    public Transform GroundCheck;
+    public LayerMask WhatIsGround;
+
 
     void Awake()
     {
@@ -17,6 +21,8 @@ public class PlayerMoveScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _isOnGround = Physics2D.OverlapCircle(GroundCheck.position, GroundRadius, WhatIsGround);
+
         if (Input.GetKey(buttons[1]))
         {
             body.velocity = new Vector3(-0.52f * speed, body.velocity.y);
