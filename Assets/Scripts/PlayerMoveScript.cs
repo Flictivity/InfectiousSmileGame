@@ -1,10 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMoveScript : MonoBehaviour
 {
     private Rigidbody2D body;
-    public float speed = 0.5f;
-    private Vector2 moveVector;
+    private float speed = 7f;
+    public int playerNumber = 0;
+    public List<KeyCode> buttons = new List<KeyCode>();
+    private bool _isOnGround = true;
 
     void Awake()
     {
@@ -14,15 +17,27 @@ public class PlayerMoveScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (body.velocity.x == 0 && Input.GetAxis("Horizontal") == 0.52)
+        if (Input.GetKey(buttons[1]))
         {
-            Destroy(gameObject);
-            return;
+            body.velocity = new Vector3(-0.52f * speed, body.velocity.y);
         }
-        body.velocity = new Vector3(Input.GetAxis("Horizontal") * speed, body.velocity.y);
-        if (Input.GetKeyDown(KeyCode.W))
+        else if (Input.GetKey(buttons[2]))
+        {
+            body.velocity = new Vector3(0.52f * speed, body.velocity.y);
+        }
+
+        if (Input.GetKeyDown(buttons[0]) && _isOnGround)
         {
             body.velocity = new Vector2(body.velocity.x, speed);
+            _isOnGround = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Block")
+        {
+            _isOnGround = true;
         }
     }
 }
