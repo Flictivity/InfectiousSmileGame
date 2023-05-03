@@ -9,7 +9,7 @@ public class GameManagementScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DataHolder.PlayerCount = 3;
+        DataHolder.PlayerCount = 1;
         for (int i = 0; i < DataHolder.PlayerCount; i++)
         {
             var spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
