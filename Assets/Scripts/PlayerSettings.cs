@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public static class PlayerButtons
+    public static class PlayerSettings
     {
         public static List<List<KeyCode>> Buttons = new List<List<KeyCode>>
         {
@@ -25,6 +25,13 @@ namespace Assets.Scripts
                 KeyCode.G,
                 KeyCode.J,
             },
+        };
+        public static List<Color> Colors = new List<Color>
+        {
+            Color.blue,
+            Color.red,
+            Color.yellow,
+            Color.cyan
         };
     }
 }
