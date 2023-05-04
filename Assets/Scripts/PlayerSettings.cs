@@ -25,6 +25,12 @@ namespace Assets.Scripts
                 KeyCode.G,
                 KeyCode.J,
             },
+            new List<KeyCode>
+            {
+                KeyCode.Keypad8,
+                KeyCode.Keypad4,
+                KeyCode.Keypad6,
+            },
         };
         public static List<Color> Colors = new List<Color>
         {

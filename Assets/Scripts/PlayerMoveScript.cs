@@ -7,8 +7,6 @@ public class PlayerMoveScript : MonoBehaviour
     public float speed = 7f;
     public List<KeyCode> buttons = new List<KeyCode>();
     private bool _isOnGround = false;
-    public bool IsTagged = false;
-    public Transform Smile;
 
     public float GroundRadius = 0.2f;
     public Transform GroundCheck;

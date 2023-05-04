@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class TaggingScript : MonoBehaviour
 {
     private Rigidbody2D tagBody;
+    private static bool _canCollide = true;
 
     private void Awake()
     {
@@ -11,21 +13,39 @@ public class TaggingScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var thisCube = gameObject.transform.parent.GetComponent<PlayerMoveScript>();
-        //if (!thisCube.IsTagged)
-        //{
-        //    return;
-        //}
+        if (!_canCollide)
+        {
+            return;
+        }
+
+        if (collision.gameObject.tag != "TagBox")
+        {
+            return;
+        }
+
+        var thisCube = gameObject.transform.parent.GetComponent<PlayerInfoScript>();
+        if (!thisCube.IsTagged)
+        {
+            return;
+        }
+        StartCoroutine(Cooldown(collision));
+    }
+
+    private IEnumerator Cooldown(Collider2D collision)
+    {
+        _canCollide = false;
+
+        var thisCube = gameObject.transform.parent.GetComponent<PlayerInfoScript>();
+
         if (collision.gameObject.tag == "TagBox")
         {
-            var enteredCube = collision.gameObject.transform.parent.GetComponent<PlayerMoveScript>();
-
-            enteredCube.IsTagged = true;
-            thisCube.IsTagged = false;
-
+            var enterCube = collision.transform.parent.gameObject.GetComponent<PlayerInfoScript>();
+            enterCube.Smile.gameObject.SetActive(true);
             thisCube.Smile.gameObject.SetActive(false);
-            enteredCube.Smile.gameObject.SetActive(true);
-            Debug.Log(123);
+            thisCube.IsTagged = false;
+            enterCube.IsTagged = true;
         }
+        yield return new WaitForSeconds(0.5f);
+        _canCollide = true;
     }
 }
