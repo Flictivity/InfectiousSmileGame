@@ -10,11 +10,11 @@ public class PlayerMoveScript : MonoBehaviour
     public List<KeyCode> buttons = new List<KeyCode>();
     private bool _isOnGround = false;
     public bool Shield = false;
+    public Transform RespawnPoint;
 
     public float GroundRadius = 0.2f;
     public Transform GroundCheck;
     public LayerMask WhatIsGround;
-    public Transform RespawnPoint;
     public Bonus Bonus;
     public bool IsBonusApply = false;
     public bool CanGetBonus = true;
