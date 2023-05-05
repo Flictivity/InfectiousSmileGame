@@ -28,6 +28,10 @@ public class TaggingScript : MonoBehaviour
         {
             return;
         }
+        if (collision.transform.parent.gameObject.GetComponent<PlayerMoveScript>().Shield)
+        {
+            return;
+        }
         StartCoroutine(Cooldown(collision));
     }
 

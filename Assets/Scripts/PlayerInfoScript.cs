@@ -5,6 +5,7 @@ public class PlayerInfoScript : MonoBehaviour
     public bool IsTagged = false;
     public Transform Smile;
     public GameObject TagBox;
+    public Transform Shield;
 
     // Start is called before the first frame update
     void Start()
