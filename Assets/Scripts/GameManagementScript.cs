@@ -6,13 +6,16 @@ using UnityEngine.UI;
 
 public class GameManagementScript : MonoBehaviour
 {
+    [SerializeField] private List<Transform> Levels;
     [SerializeField] private GameObject[] PlayerCube;
     [SerializeField] private GameObject[] BonusesPrefabs;
     [SerializeField] public CameraControl CameraControl;
-    [SerializeField] private List<Transform> spawnPoints;
     [SerializeField] private List<Transform> bonusPoints;
     [SerializeField] private Text timerText;
+    [SerializeField] private Animator winDialog;
+    [SerializeField] private GameObject winner;
     public List<GameObject> Players;
+    private int playersCount = 0;
     private float gameTimer = 0f;
     private float bonusTimer = 0f;
     private float gameTime = 31f;
@@ -21,9 +24,16 @@ public class GameManagementScript : MonoBehaviour
 
     void Start()
     {
-        var spawnPointsClone = new List<Transform>(spawnPoints);
-        DataHolder.PlayerCount = 2;
-        for (int i = 0; i < DataHolder.PlayerCount; i++)
+        bonusPoints = Levels[DataHolder.Level].GetComponent<LevelInfoScript>().bonusSpawnPoints;
+        playersCount = DataHolder.PlayerCount;
+
+        Levels[DataHolder.Level].gameObject.SetActive(true);
+
+        var levelInfo = Levels[DataHolder.Level].GetComponent<LevelInfoScript>();
+
+        var spawnPointsClone = new List<Transform>(levelInfo.spawnPoints);
+
+        for (int i = 0; i < playersCount; i++)
         {
             var n = Random.Range(0, spawnPointsClone.Count);
             var spawnPoint = spawnPointsClone[n];
@@ -75,12 +85,13 @@ public class GameManagementScript : MonoBehaviour
             CameraControl.Targets.Remove(destroyPlayer.transform);
             Players.Remove(destroyPlayer);
             Destroy(destroyPlayer);
-            DataHolder.PlayerCount--;
+            playersCount--;
 
-            if (DataHolder.PlayerCount == 1)
+            if (playersCount == 1)
             {
                 isGameOver = true;
-                Time.timeScale = 0;
+                winDialog.SetTrigger("ChangeState");
+                //Time.timeScale = 0;
                 return;
             }
 
@@ -112,14 +123,10 @@ public class GameManagementScript : MonoBehaviour
 
     private void RespawnPlayers()
     {
-        var spawnPointsClone = new List<Transform>(spawnPoints);
-
         foreach (var player in Players)
         {
-            var spawnPoint = spawnPointsClone[Random.Range(0, spawnPointsClone.Count)];
+            var spawnPoint = player.GetComponent<PlayerMoveScript>().RespawnPoint;
             player.transform.position = spawnPoint.transform.position;
-
-            spawnPointsClone.Remove(spawnPoint);
         }
     }
 
