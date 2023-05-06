@@ -925,7 +925,6 @@ MonoBehaviour:
   - {fileID: 836731223}
   - {fileID: 1636052392}
   - {fileID: 926471411}
-  CubesOlace: {fileID: 1272541257}
 --- !u!1 &1015266660
 GameObject:
   m_ObjectHideFlags: 0
@@ -1932,7 +1931,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ef4390874b7901c4d9b344d8aa198b6c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 73e4cc171fb25014699704ad92497ed5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2837,7 +2836,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ef4390874b7901c4d9b344d8aa198b6c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 395f8d510893e314f8cac91a87e0684f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
