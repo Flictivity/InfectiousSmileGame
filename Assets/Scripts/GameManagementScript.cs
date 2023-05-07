@@ -14,6 +14,7 @@ public class GameManagementScript : MonoBehaviour
     [SerializeField] private Text timerText;
     [SerializeField] private Animator winDialog;
     [SerializeField] private GameObject winner;
+    [SerializeField] private Transform bonusPoitnsSpawnObject;
     public List<GameObject> Players;
     private int playersCount = 0;
     private float gameTimer = 0f;
@@ -21,10 +22,12 @@ public class GameManagementScript : MonoBehaviour
     private float gameTime = 31f;
     private float bonusTime = 7f;
     private bool isGameOver;
+    private List<Transform> bonusPointsCopy;
 
     void Start()
     {
         bonusPoints = Levels[DataHolder.Level].GetComponent<LevelInfoScript>().bonusSpawnPoints;
+        bonusPointsCopy = new List<Transform>(bonusPoints);
         playersCount = DataHolder.PlayerCount;
 
         Levels[DataHolder.Level].gameObject.SetActive(true);
@@ -98,13 +101,13 @@ public class GameManagementScript : MonoBehaviour
             RespawnPlayers();
             SetTaggedPlayer();
             gameTimer = gameTime;
+            bonusTimer = bonusTime;
         }
 
         bonusTimer -= Time.deltaTime;
         if ((int)bonusTimer <= 0)
         {
-            var bonus = Instantiate(BonusesPrefabs[Random.Range(0, BonusesPrefabs.Length)], null);
-            bonus.transform.position = bonusPoints[Random.Range(0, bonusPoints.Count)].position;
+            SpawnBonus();
             bonusTimer = bonusTime;
         }
     }
@@ -128,6 +131,22 @@ public class GameManagementScript : MonoBehaviour
             var spawnPoint = player.GetComponent<PlayerMoveScript>().RespawnPoint;
             player.transform.position = spawnPoint.transform.position;
         }
+        foreach (Transform bonus in bonusPoitnsSpawnObject.GetComponentInChildren<Transform>())
+        {
+            Destroy(bonus.gameObject);
+        }
     }
 
+    private void SpawnBonus()
+    {
+        if (bonusPointsCopy.Count == 0)
+        {
+            bonusPointsCopy = new List<Transform>(bonusPoints);
+        }
+        var bonus = Instantiate(BonusesPrefabs[Random.Range(0, BonusesPrefabs.Length)], bonusPoitnsSpawnObject);
+        var bonusSpawnPoint = bonusPointsCopy[Random.Range(0, bonusPointsCopy.Count)];
+
+        bonus.transform.position = bonusSpawnPoint.position;
+        bonusPointsCopy.Remove(bonusSpawnPoint);
+    }
 }
