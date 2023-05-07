@@ -1,5 +1,6 @@
 using Assets.Scripts;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerMoveScript : MonoBehaviour
@@ -53,8 +54,23 @@ public class PlayerMoveScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Water")
         {
+            SetTagToRandomCube();
             transform.position = RespawnPoint.position;
         }
+    }
+
+    private void SetTagToRandomCube()
+    {
+        if (Shield || Players.Count == 1)
+        {
+            return;
+        }
+
+        var taggedCube = Players.FirstOrDefault(x => x.GetComponent<PlayerInfoScript>().IsTagged);
+        taggedCube.GetComponent<PlayerInfoScript>().IsTagged = false;
+        gameObject.GetComponent<PlayerInfoScript>().IsTagged = true;
+        taggedCube.GetComponent<PlayerInfoScript>().Smile.gameObject.SetActive(false);
+        gameObject.GetComponent<PlayerInfoScript>().Smile.gameObject.SetActive(true);
     }
 
     private void ApplyBonus()
