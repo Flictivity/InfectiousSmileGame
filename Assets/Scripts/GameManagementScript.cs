@@ -94,6 +94,7 @@ public class GameManagementScript : MonoBehaviour
             {
                 isGameOver = true;
                 winDialog.SetTrigger("ChangeState");
+                winner.GetComponent<Image>().sprite = Players[0].GetComponent<SpriteRenderer>().sprite;
                 //Time.timeScale = 0;
                 return;
             }
