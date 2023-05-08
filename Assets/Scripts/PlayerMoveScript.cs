@@ -95,14 +95,6 @@ public class PlayerMoveScript : MonoBehaviour
                     Shield = true;
                     gameObject.GetComponent<PlayerInfoScript>().Shield.gameObject.SetActive(true);
                     break;
-                case BonusType.SlowTaggedBonus:
-                    //if (Players == null)
-                    //{
-                    //    return;
-                    //}
-                    //var taggedPlayer = Players.FirstOrDefault(x => x.GetComponent<PlayerInfoScript>().IsTagged);
-                    //taggedPlayer.GetComponent<PlayerMoveScript>().speed -= 10f;
-                    break;
             }
             IsBonusApply = true;
         }
